@@ -13,7 +13,7 @@ export default function EditNote({
 }: EditNoteProps) {
     const note=useNote();
     return (
-        <>
+        <div className="p-5">
             <header>
                 <h1 className="title">edit</h1>
             </header>
@@ -25,6 +25,6 @@ export default function EditNote({
                 onAddTag={onAddTag}
                 availableTags={availableTags}
             />
-        </>
+        </div>
     );
 }
