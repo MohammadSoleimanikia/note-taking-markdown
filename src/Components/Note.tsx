@@ -10,7 +10,7 @@ export default function Note({ onDelete }: NoteProps) {
     const note = useNote();
     const navigate = useNavigate();
     return (
-        <>
+        <div className="p-5">
             <header className=" mb-4 flex justify-between items-center">
                 <div>
                     <h1 className="title">{note.title}</h1>
@@ -27,7 +27,7 @@ export default function Note({ onDelete }: NoteProps) {
 
                 <div className="flex gap-2">
                     <Link to={`/${note.id}/edit`}>
-                        <Button>ویرایش</Button>
+                        <Button>Edit</Button>
                     </Link>
                     <Button
                         onClick={() => {
@@ -36,24 +36,20 @@ export default function Note({ onDelete }: NoteProps) {
                         }}
                         variant={"destructive"}
                     >
-                        حذف
+                        Delete
                     </Button>
                     <Link to={".."}>
-                        <Button variant={"secondary"}>بازگشت</Button>
+                        <Button variant={"secondary"}>Return</Button>
                     </Link>
                 </div>
             </header>
             <div
-                className="prose max-w-none"
-                style={{
-                    // add for support one line break
-                    whiteSpace: "pre-wrap",
-                }}
+                className="prose max-w-none rounded-sm bg-slate-200 p-3"
             >
                 <ReactMarkdown>
                     {note.markdown}
                 </ReactMarkdown>
             </div>
-        </>
+        </div>
     );
 }

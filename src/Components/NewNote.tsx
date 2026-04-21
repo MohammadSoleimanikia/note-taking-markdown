@@ -11,15 +11,15 @@ export default function NewNote({
     availableTags,
 }: NewNoteProps) {
     return (
-        <>
+        <div className="p-5">
             <header>
-                <h1 className="title">یادداشت جدید</h1>
+                <h1 className="title">New Note</h1>
             </header>
             <NoteForm
                 onSubmit={onSubmit}
                 onAddTag={onAddTag}
                 availableTags={availableTags}
             />
-        </>
+        </div>
     );
 }

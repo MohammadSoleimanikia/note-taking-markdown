@@ -15,7 +15,7 @@ export default function EditNote({
     return (
         <>
             <header>
-                <h1 className="title">اصلاح یادداشت</h1>
+                <h1 className="title">edit</h1>
             </header>
             <NoteForm
                 title={note.title}

@@ -18,11 +18,11 @@ export function EditModal({ availableTags,deleteTag,updateTag }: EditTagsModalPr
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button  variant="outline">اصلاح تگ ها</Button>
+                <Button  variant="outline">Edit tags</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle className="mb-4">اصلاح تگ ها</DialogTitle>
+                    <DialogTitle className="mb-4">Edit tags</DialogTitle>
                     <DialogDescription>
                         <form onSubmit={(e)=>e.preventDefault()} className="flex flex-col gap-3">
                             {availableTags.map((tag) => {

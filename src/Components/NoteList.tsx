@@ -42,13 +42,13 @@ export default function NoteList({ availableTags, notes,updateTag,deleteTag }: N
     }, [title, selectedTags, notes]);
 
     return (
-        <>
+        <div className="p-5">
             <header className="flex justify-between items-baseline mb-4">
-                <h1 className="title">یادداشت ها</h1>
+                <h1 className="title">Notes</h1>
 
                 <div className="flex gap-3">
                     <Link to={"/new"}>
-                        <Button>ایجاد</Button>
+                        <Button>Create</Button>
                     </Link>
                     <EditModal updateTag={updateTag} deleteTag={deleteTag} availableTags={availableTags} />
                 </div>
@@ -56,7 +56,7 @@ export default function NoteList({ availableTags, notes,updateTag,deleteTag }: N
 
             <form className="flex flex-col mb-5 gap-5 sm:flex-row sm:items-end">
                 <div className="flex flex-col gap-2 flex-1 min-w-[200px]">
-                    <Label htmlFor="title">عنوان</Label>
+                    <Label htmlFor="title">title</Label>
                     <Input
                         id="title"
                         value={title}
@@ -67,9 +67,9 @@ export default function NoteList({ availableTags, notes,updateTag,deleteTag }: N
                 </div>
 
                 <div className="flex flex-col gap-2 flex-1 min-w-[200px]">
-                    <Label htmlFor="tag">تگ</Label>
+                    <Label htmlFor="tag">tag</Label>
                     <Select
-                        placeholder="انتخاب تگ "
+                        placeholder="Select tags"
                         id="tag"
                         isMulti
                         value={selectedTags.map((tag) => {
@@ -102,7 +102,7 @@ export default function NoteList({ availableTags, notes,updateTag,deleteTag }: N
                     />
                 ))}
             </div>
-        </>
+        </div>
     );
 }
 
