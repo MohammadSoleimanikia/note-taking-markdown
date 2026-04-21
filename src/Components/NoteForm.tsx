@@ -1,5 +1,6 @@
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+
 import CreatableSelect from "react-select/creatable";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +9,7 @@ import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { useRef, useState, type FormEvent } from "react";
 import { type Tag, type NoteData } from "@/App";
+import ReactMarkdown from "react-markdown";
 
 type NoteFormProp = {
     onSubmit: (data: NoteData) => void;
@@ -28,6 +30,9 @@ export default function NoteForm({
     const markdownRef = useRef<HTMLTextAreaElement>(null);
 
     const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
+    const [isMarkDown, setIsMarkDown] = useState(false);
+    const [markDownText, setMarkDownText] = useState(markdown);
+    const [titleText, setTitleText] = useState(title);
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -40,25 +45,30 @@ export default function NoteForm({
         // navigate to prev page
         navigate("..");
     };
-    
+    const togglePreview = () => {
+        if (markdownRef.current) {
+            setMarkDownText(markdownRef.current.value);
+        }
+        setIsMarkDown((prevIsMarkDown) => !prevIsMarkDown);
+    };
     return (
         <div>
             <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-5">
                     <div>
                         <Label className="mb-2" htmlFor="title">
-                            عنوان
+                            title
                         </Label>
                         <Input
                             ref={titleRef}
                             id="title"
                             required
-                            defaultValue={title}
+                            defaultValue={titleText}
                         />
                     </div>
                     <div>
                         <Label className="mb-2" htmlFor="tag">
-                            تگ ها
+                            Tags
                         </Label>
                         <CreatableSelect
                             // add new tag
@@ -67,7 +77,7 @@ export default function NoteForm({
                                 onAddTag(newTag);
                                 setSelectedTags((prev) => [...prev, newTag]);
                             }}
-                            placeholder="انتخاب تگ "
+                            placeholder="Select tag "
                             id="tag"
                             isMulti
                             value={selectedTags.map((tag) => {
@@ -84,29 +94,52 @@ export default function NoteForm({
                                             label: tag.label,
                                             id: tag.value,
                                         };
-                                    })
+                                    }),
                                 );
                             }}
                         />
                     </div>
                 </div>
-                <div>
-                    <Label className="mb-2" htmlFor="body">
-                        متن{" "}
-                    </Label>
-                    <Textarea
-                        ref={markdownRef}
-                        id="body"
-                        className="h-52"
-                        required
-                        defaultValue={markdown}
-                    />
+                <div className="mb-3 ">
+                    {isMarkDown && (
+                        <>
+                            <Label htmlFor="preview" className="mb-4">
+                               Preview{" "}
+                            </Label>
+                            <div className="prose max-w-none h-52 overflow-x-auto bg-slate-100 rounded-sm p-1">
+                                <ReactMarkdown>{markDownText}</ReactMarkdown>
+                            </div>
+                        </>
+                    )}
+                    {!isMarkDown && (
+                        <div>
+                            <Label htmlFor="body" className="mb-4">
+                                MarkDown
+                            </Label>
+                            <Textarea
+                                ref={markdownRef}
+                                id="body"
+                                className="h-52"
+                                required
+                                defaultValue={markDownText}
+                            />
+                        </div>
+                    )}
+                    <div className="flex-1"></div>
                 </div>
                 <div className="flex gap-5">
-                    <Button type="submit">ذخیره</Button>
+                    <Button type="submit">Save</Button>
                     <Link to="..">
-                        <Button variant={"outline"}>انصراف</Button>
+                        <Button variant={"outline"}>Cancel</Button>
                     </Link>
+                    <Button
+                        onClick={togglePreview}
+                        type="button"
+                        variant={"outline"}
+                    >
+                        {isMarkDown && "MarkDown"}
+                        {!isMarkDown && "Preview"}
+                    </Button>
                 </div>
             </form>
         </div>
